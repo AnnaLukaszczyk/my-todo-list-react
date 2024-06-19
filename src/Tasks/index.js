@@ -1,26 +1,27 @@
-import "./style.css";
+import { List, Item, Content, Button, Icon } from "./styled";
+import { faCheck, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const Tasks = ({ tasks, hideDone, removeTask, toggleTaskDone }) => (
-	<ul className="tasks">
+	<List>
 		{tasks.map((task) => (
-			<li
-				key={task.id}
-				className={`task${task.done && hideDone ? " tasks__itemHidden" : ""}`}>
-				<button className="task__button" onClick={() => toggleTaskDone(task.id)}>
-					<i
-						className={`fa-solid fa-check${
-							task.done ? "" : " task__buttonIcon"
-						}`}></i>
-				</button>
-				<span className={`task__content${task.done ? " taskDone" : ""}`}>
+			<Item key={task.id} hidden={task.done && hideDone}>
+				<Button
+					toggleDone
+					onClick={() => toggleTaskDone(task.id)}>
+					<Icon icon={faCheck}
+					undone={!task.done}></Icon >
+				</Button>
+				<Content done={task.done}>
 					{task.content}
-				</span>
-				<button className="task__button task__button--remove" onClick={() => removeTask(task.id)}>
-					<i className="fa-regular fa-trash-can"></i>
-				</button>
-			</li>
+				</Content>
+				<Button
+					remove
+					onClick={() => removeTask(task.id)}>
+					<Icon  icon={faTrashCan}></Icon >
+				</Button>
+			</Item>
 		))}
-	</ul>
+	</List>
 );
 
 export default Tasks;
